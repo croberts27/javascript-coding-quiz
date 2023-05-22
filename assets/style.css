@@ -9,17 +9,13 @@ header {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-header a {
+.high-scores {
     font-size: larger;
     color: var(--dark);
     text-decoration: none;
 }
 
-header a:hover {
-    color: var(--light);
-}
-
-.timer {
+#timer {
     font-size: large;
 }
 
