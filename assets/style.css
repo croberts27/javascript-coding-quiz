@@ -27,7 +27,7 @@ main {
     padding: 16px;
 }
 
-main h1 {
+#introduction {
     display: flex;
     justify-content: center;
     font-size: xx-large;
@@ -36,7 +36,7 @@ main h1 {
     padding: 16px;
 }
 
- main p {
+main p {
     display: flex;
     flex-flow: column wrap;
     font-size: larger;
@@ -45,7 +45,7 @@ main h1 {
     padding: 16px;
  }
 
- main button {
+ #start-button {
     display: flex;
     justify-content: center;
     align-self: center;
@@ -57,9 +57,13 @@ main h1 {
     margin: 16px;
  }
 
- main button:hover {
+ #start-button:hover {
     background-color: var(--light);
     box-shadow: 0 0.4rem 1.4rem 0 var(--dark);
     transition: transform, 150ms;
     transform: scale(0.9);
+ }
+
+ #questions {
+    display:none;
  }
