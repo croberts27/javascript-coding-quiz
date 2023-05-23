@@ -9,17 +9,24 @@ var startButton = document.querySelector("#start-button");
 var timerNum = 60;
 
 //DATA
+
 function startQuiz () {
     timerInterval = setInterval(() => {
         timerCount = document.querySelector("#timer").innerHTML = "00:00:" + timerNum;
         timerNum--;
 
         if (timerNum === 0) {
-            clearInterval(timerInterval)
+            clearInterval(timerInterval);
+            displayMessage();
         }
     }, 1000);
+
     document.getElementById("questions").style.display = "flex";
     document.getElementById("questions").style.justifyContent = "center";
+}
+
+function displayMessage(){
+    timerCount.textContent = "Congratulations! You finished the quiz.";
 }
 
 startButton.addEventListener("click", ()=> {
