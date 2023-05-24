@@ -27,7 +27,7 @@ main {
     padding: 16px;
 }
 
-#introduction {
+#intro {
     display: flex;
     justify-content: center;
     font-size: xx-large;
@@ -68,12 +68,6 @@ main p {
     display:none;
  }
 
- #question1 {
-    display: flex;
-    justify-content: center;
-    flex-flow: column wrap;
-    font-size: larger;
-    font-weight: 100;
-    margin: 16px;
-    padding: 16px;
+ #submit {
+    display:none;
  }
