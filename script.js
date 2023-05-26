@@ -97,7 +97,7 @@ function startTimer () {
 
 function gameOver () {
     quizEl.classList.add("hidden");
-    // questionIndex >= quizQuestions.length
+    questionIndex >= quizQuestions.length;
 }
 
 //Function to start quiz
