@@ -63,11 +63,12 @@ main p {
     transition: transform, 150ms;
     transform: scale(0.9);
  }
-
+ 
+/* 
  #questions {
     display:none;
- }
+ } */
 
- #submit {
+ .hidden {
     display:none;
  }
