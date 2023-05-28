@@ -64,7 +64,14 @@ function displayQuestions() {
     ans2El.textContent = currentQuestion.answers.b;
     ans3El.textContent = currentQuestion.answers.c;
     ans4El.textContent = currentQuestion.answers.a;
-};
+}
+    if (questionIndex <= quizQuestions.length){
+        gameOver()
+    };
+
+function gameOver () {
+    quizEl.classList.add("hidden");
+}
 
 function checkAnswer(event){
     console.log(event.target.textContent)
@@ -76,28 +83,21 @@ function checkAnswer(event){
         timerNum -= 10;
         alert("Wrong!");
     }
-    if (questionIndex < quizQuestions.length){
+    if (questionIndex <= quizQuestions.length){
         questionIndex++;
         displayQuestions();
-    } else {
-        gameOver();
-    }
+    } 
 };
 
 //Function for timer
 function startTimer () {
-    timerInterval = setInterval(() => {
+   var timerInterval = setInterval(() => {
         timerCount = document.querySelector("#timer").innerHTML = "00:00:" + timerNum;
         timerNum--;
         if (timerNum === 0) {
             clearInterval(timerInterval);
         } 
     }, 1000);   
-}
-
-function gameOver () {
-    quizEl.classList.add("hidden");
-    questionIndex >= quizQuestions.length;
 }
 
 //Function to start quiz
@@ -120,4 +120,4 @@ ans4El.addEventListener('click', function(event) {
 startButton.addEventListener("click", ()=> {
     startTimer();
     startQuiz();
-});
+})
