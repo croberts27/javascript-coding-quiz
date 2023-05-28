@@ -63,6 +63,25 @@ main p {
     transition: transform, 150ms;
     transform: scale(0.9);
  }
+
+ #submit{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+    color: black;
+    background-color: var(--dark);
+    max-width: max-content;
+    border-radius: 7px;
+    margin: 16px;
+ }
+
+ #submit:hover {
+    background-color: var(--light);
+    box-shadow: 0 0.4rem 1.4rem 0 var(--dark);
+    transition: transform, 150ms;
+    transform: scale(0.9);
+ }
  
 /* 
  #questions {
