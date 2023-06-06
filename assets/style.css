@@ -91,3 +91,15 @@ main p {
  .hidden {
     display:none;
  }
+
+ #score {
+    display:flex;
+ }
+
+ #quiz{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+ }

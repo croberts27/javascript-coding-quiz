@@ -7,6 +7,7 @@ var ans2El = document.getElementById("ans2");
 var ans3El = document.getElementById("ans3");
 var ans4El = document.getElementById("ans4");
 var submitButton = document.getElementById("submit");
+var scoreDisplay = document.getElementById('scoreSection')
 
 //DATA
 var timerNum = 60;
@@ -58,6 +59,16 @@ var quizQuestions = [
 ];
 //Function to display quiz questions
 
+startButton.addEventListener("click", ()=> {
+    startTimer();
+    startQuiz();
+})
+
+//Function to start quiz
+function startQuiz() {
+    displayQuestions();
+}
+
 function checkAnswer(event){
     console.log(event.target.textContent)
     var currentQuestion = quizQuestions[questionIndex]
@@ -72,22 +83,28 @@ function checkAnswer(event){
         console.log(userScore)
         console.log("Wrong!");
         alert("Wrong!");
-    }
-    if (questionIndex <= quizQuestions.length){
+    } if (questionIndex < quizQuestions.length -1){
         questionIndex++;
         displayQuestions();
+    }else {
+        gameOver()
     }
-}
+} 
 
 function displayQuestions() {
     quizEl.classList.remove("hidden");
+    ans1El.classList.remove("hiden");
+    ans2El.classList.remove("hiden");
+    ans3El.classList.remove("hiden");
+    ans4El.classList.remove("hiden");
     var currentQuestion = quizQuestions[questionIndex];
     questionsEl.textContent = currentQuestion.question;
     ans1El.textContent = currentQuestion.answers.d;
     ans2El.textContent = currentQuestion.answers.b;
     ans3El.textContent = currentQuestion.answers.c;
     ans4El.textContent = currentQuestion.answers.a;
-}
+} 
+
     
 
 function gameOver () {
@@ -97,26 +114,22 @@ function gameOver () {
     alert('Game Over! Click "Submit" to see your score!');
 }
 
+function displayScore () {
+   scoreDisplay.classList.remove("hidden"); 
+   const score = document.getElementById('score')
+   score.textContent = userScore;
+}
+
 //Function for timer
-//|| questionIndex === quizQuestions.length - could go in 'if' statement?
 function startTimer () {
    var timerInterval = setInterval(() => {
         timerCount = document.querySelector("#timer").innerHTML = "00:00:" + timerNum;
         timerNum--;
-        if (timerNum < 0 || questionIndex === quizQuestions.length) {
+        if (timerNum < 0 ) {
             clearInterval(timerInterval);
             gameOver();
         }
     }, 1000);   
-}
-
-//Function to start quiz
-function startQuiz() {
-      displayQuestions();
-  }
-
-function displayScore () {
-
 }
 
 
@@ -131,10 +144,6 @@ ans3El.addEventListener('click', function(event) {
 ans4El.addEventListener('click', function(event) {
     checkAnswer(event)});
 
-startButton.addEventListener("click", ()=> {
-    startTimer();
-    startQuiz();
-})
 
 
 submitButton.addEventListener("click", ()=>{
