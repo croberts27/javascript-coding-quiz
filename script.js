@@ -187,6 +187,10 @@ function updateTimer() {
     endQuiz();
   }
 }
+
+function padNumber(number) {
+  return number.toString().padStart(2, "0");
+}
 // Event listener for the start button
 startButton.addEventListener("click", startQuiz);
 
