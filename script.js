@@ -1,151 +1,169 @@
-//DEPENDENCIES
-var startButton = document.querySelector("#start-button");
-var questionsEl = document.getElementById("questions");
-var quizEl = document.getElementById("quiz");
-var ans1El = document.getElementById("ans1");
-var ans2El = document.getElementById("ans2");
-var ans3El = document.getElementById("ans3");
-var ans4El = document.getElementById("ans4");
-var submitButton = document.getElementById("submit");
-var scoreDisplay = document.getElementById('scoreSection')
-
-//DATA
-var timerNum = 60;
-var questionIndex = 0;
-var userScore = 0;
-//Define questions
-
-var quizQuestions = [
-    {
-        question: "Inside which HTML element does JavaScript live?",
-        answers: {
-            a: '<JavaScript>',
-            b: '<javascript>',
-            c: '<js>',
-            d: '<script>',
-        },
-        correctAnswer: '<script>'
+// Quiz questions and answers
+var quizQandAs = [
+  {
+    question: "Inside which HTML element do we put our JavaScript?",
+    answers: {
+      a: "scripting",
+      b: "script",
+      c: "javascript",
+      d: "js",
     },
-    {
-        question: "Where is the correct place to insert a JavaScript?",
-        answers: {
-            a: 'The <head> section',
-            b: 'The <body> section',
-            c: 'In the <JavaScript> section',
-            d: 'In both the <head> and <body> sections',
-        },
-        correctAnswer: 'The <body> section'
+    correctAnswer: "b",
+  },
+  {
+    question:
+      "What is the correct JavaScript syntax to change the content of a <p> html element with the id 'demo'?",
+    answers: {
+      a: '#demo.innerHTML = "Hello World!',
+      b: 'document.getElementByName("p").innerHTML = "Hello World!";',
+      c: 'document.getElementById("demo").innerHTML = "Hello World!;',
+      d: 'document.getElement("p").innerHTML = "Hello World!;',
     },
-    {
-        question: "How do you create a function in JavaScript?",
-        answers: {
-            a: 'function.myFunction()',
-            b: 'function = myFunction()',
-            c: 'function myFunction()',
-            d: 'FUNK-ton()',
-        },
-        correctAnswer: 'function myFunction()'
+    correctAnswer: "c",
+  },
+  {
+    question: "What is the correct syntax for referring to an external script?",
+    answers: {
+      a: 'script src="script.js"',
+      b: 'script href="script.js"',
+      c: 'script id="script.js"',
+      d: 'script name="script.js"',
     },
-    {
-        question: "How does a FOR loop start?",
-        answers: {
-            a: 'for (i=0;i<5;i++)',
-            b: 'for (i+=5)',
-            c: 'for (for i=0;i<5;i++)',
-            d: 'for {i=0;i<5;i++}',
-        },
-        correctAnswer: 'for (i=0;i<5;i++)'
-    }
+    correctAnswer: "a",
+  },
+  {
+    question: "How do you write 'Hello World' in an alert box?",
+    answers: {
+      a: 'msgBox("Hello World");',
+      b: 'alertBox("Hello World")',
+      c: 'msg("Hello World")',
+      d: 'alert("Hello World")',
+    },
+    correctAnswer: "d",
+  },
 ];
-//Function to display quiz questions
 
-startButton.addEventListener("click", ()=> {
-    startTimer();
-    startQuiz();
-})
+// Global variables
+var currentQuestionIndex = 0;
+var timeLeft = 60;
+var timerInterval;
+var highScores = [];
 
-//Function to start quiz
+var startButton = document.getElementById("start-button");
+var quizSection = document.getElementById("quiz");
+var questionsElement = document.getElementById("questions");
+var answerButtons = document.querySelectorAll("#quiz button[id^='ans']");
+var scoreSection = document.getElementById("scoreSection");
+var scoreElement = document.getElementById("score");
+var submitButton = document.getElementById("submit");
+var scoreboard = document.getElementById("scoreboard");
+var highScoresButton = document.getElementById("high-scores-button");
+var highScoresSection = document.getElementById("high-scores-section");
+
+// Function to start the quiz
 function startQuiz() {
-    displayQuestions();
+  startButton.classList.add("hidden");
+  quizSection.classList.remove("hidden");
+  timerInterval = setInterval(updateTimer, 1000);
+  displayQuestion();
 }
 
-function checkAnswer(event){
-    console.log(event.target.textContent)
-    var currentQuestion = quizQuestions[questionIndex]
-    if (currentQuestion.correctAnswer === event.target.textContent){
-        console.log("Correct!");
-        alert("Correct!") ;
-        userScore ++;
-        console.log(userScore)
-    } else {
-        timerNum -= 10;
-        userScore --;
-        console.log(userScore)
-        console.log("Wrong!");
-        alert("Wrong!");
-    } if (questionIndex < quizQuestions.length -1){
-        questionIndex++;
-        displayQuestions();
-    }else {
-        gameOver()
+// Function to display a question
+function displayQuestion() {
+  var currentQuestion = quizQandAs[currentQuestionIndex];
+  questionsElement.textContent = currentQuestion.question;
+
+  for (var i = 0; i < answerButtons.length; i++) {
+    answerButtons[i].textContent =
+      currentQuestion.answers[Object.keys(currentQuestion.answers)[i]];
+    answerButtons[i].addEventListener("click", checkAnswer);
+  }
+}
+
+// Function to check the selected answer
+function checkAnswer(event) {
+  var selectedAnswerIndex = parseInt(event.target.id.slice(-1));
+  var currentQuestion = quizQandAs[currentQuestionIndex];
+
+  if (
+    Object.keys(currentQuestion.answers)[selectedAnswerIndex] ===
+    currentQuestion.correctAnswer
+  ) {
+    // Correct answer
+    prompt("Correct!");
+  } else {
+    // Incorrect answer
+    prompt("Wrong!");
+    timeLeft -= 10;
+    if (timeLeft <= 0) {
+      timeLeft = 0;
+      endQuiz();
     }
-} 
+  }
 
-function displayQuestions() {
-    quizEl.classList.remove("hidden");
-    ans1El.classList.remove("hiden");
-    ans2El.classList.remove("hiden");
-    ans3El.classList.remove("hiden");
-    ans4El.classList.remove("hiden");
-    var currentQuestion = quizQuestions[questionIndex];
-    questionsEl.textContent = currentQuestion.question;
-    ans1El.textContent = currentQuestion.answers.d;
-    ans2El.textContent = currentQuestion.answers.b;
-    ans3El.textContent = currentQuestion.answers.c;
-    ans4El.textContent = currentQuestion.answers.a;
-} 
-
-    
-
-function gameOver () {
-    submitButton.addEventListener("click", ()=>{
-        quizEl.classList.add("hidden");
-    })
-    alert('Game Over! Click "Submit" to see your score!');
+  currentQuestionIndex++;
+  if (currentQuestionIndex === quizQandAs.length || timeLeft <= 0) {
+    endQuiz();
+  } else {
+    displayQuestion();
+  }
 }
 
-function displayScore () {
-   scoreDisplay.classList.remove("hidden"); 
-   const score = document.getElementById('score')
-   score.textContent = userScore;
+// Function to end the quiz
+function endQuiz() {
+  clearInterval(timerInterval);
+  quizSection.classList.add("hidden");
+  scoreSection.classList.remove("hidden");
+  scoreElement.textContent = timeLeft;
+  highScores.push(timeLeft);
+  submitButton.classList.remove("hidden");
+  submitButton.addEventListener("click", saveScore);
 }
 
-//Function for timer
-function startTimer () {
-   var timerInterval = setInterval(() => {
-        timerCount = document.querySelector("#timer").innerHTML = "00:00:" + timerNum;
-        timerNum--;
-        if (timerNum < 0 ) {
-            clearInterval(timerInterval);
-            gameOver();
-        }
-    }, 1000);   
+// Function to save the score
+function saveScore() {
+  var initials = prompt("Please enter your initials:");
+  var scoreEntry = document.createElement("p");
+  scoreEntry.textContent = initials + ": " + timeLeft;
+  scoreboard.appendChild(scoreEntry);
 }
 
+// Function to update the timer
+function updateTimer() {
+  var timerElement = document.getElementById("timer");
+  var minutes = Math.floor(timeLeft / 60);
+  var seconds = timeLeft % 60;
+  var timeString = padNumber(minutes) + ":" + padNumber(seconds);
+  timerElement.textContent = timeString;
+  timeLeft--;
 
-//Listens for click and checks answer
+  if (timeLeft < 0) {
+    clearInterval(timerInterval);
+    endQuiz();
+  }
+}
 
-ans1El.addEventListener('click', function(event) {
-    checkAnswer(event)})
-ans2El.addEventListener('click', function(event) {
-    checkAnswer(event)})
-ans3El.addEventListener('click', function(event) {
-    checkAnswer(event)})
-ans4El.addEventListener('click', function(event) {
-    checkAnswer(event)});
+// Event listener for the start button
+startButton.addEventListener("click", startQuiz);
 
+// Event listener for the high scores button
+highScoresButton.addEventListener("click", showHighScores);
 
-
-submitButton.addEventListener("click", ()=>{
-    displayScore();
-})
+// Function to show the high scores
+function showHighScores() {
+  highScoresSection.innerHTML = "";
+  if (highScores.length === 0) {
+    var noScoresMessage = document.createElement("p");
+    noScoresMessage.textContent = "No high scores recorded yet.";
+    highScoresSection.appendChild(noScoresMessage);
+  } else {
+    var scoresList = document.createElement("ol");
+    for (var i = 0; i < highScores.length; i++) {
+      var scoreItem = document.createElement("li");
+      scoreItem.textContent = highScores[i];
+      scoresList.appendChild(scoreItem);
+    }
+    highScoresSection.appendChild(scoresList);
+  }
+  highScoresSection.classList.toggle("hidden");
+}
