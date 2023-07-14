@@ -90,10 +90,10 @@ function checkAnswer(event) {
     currentQuestion.correctAnswer
   ) {
     // Correct answer
-    prompt("Correct!");
+    alert("Correct!");
   } else {
     // Incorrect answer
-    prompt("Wrong!");
+    alert("Wrong!");
     timeLeft -= 10;
     if (timeLeft <= 0) {
       timeLeft = 0;
