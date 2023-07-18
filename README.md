@@ -25,7 +25,7 @@ THEN I can save my initials and score
 ````
 
 ## Screenshot
-
+![screenshot](/assets/image.png)
 ## Deployment
 
 The quiz has been deployed and can be accessed here: https://croberts27.github.io/code-quiz-hw-4/
